@@ -5,15 +5,22 @@
  */
 package januaryproject1;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
 /**
  *
  * @author MarcoAyala
  */
 public class ContactApp {
-    Contact[] contacts = new Contact [10000]; 
-    int contactCount = 0; 
+    Vector<Contact> contacts = new Vector<>(); 
     
     
+    
+    void addContact(Contact c)
+    {
+        contacts.add(c);
+    }
     
     void addContact(String firstName, String lastName, String phoneNumber, String email){ 
         Contact contact = new Contact(); 
@@ -22,7 +29,7 @@ public class ContactApp {
         contact.setPhoneNumber(phoneNumber);
         contact.setEmail(email);
         
-        contacts[contactCount++] = contact; 
+        contacts.add(contact); 
     }
     
     void deleteContact(int r){
@@ -32,26 +39,15 @@ public class ContactApp {
         if (r<0){
             throw new RuntimeException("Nothing selected");
         }
-        
-        if (contacts[r] == null){
-            throw new RuntimeException("There is nothing here");
-        }
-        
+                
         // normal -- null the entry, shift everything down
-        
-        contacts[r]= null; 
-       
-        for (int i=r;i<9999;i++){
-            contacts[i] = contacts[i+1]; 
- 
-        }
-        
+       contacts.remove(r);
                    
         
     }
     
     Contact selectContact(int q){
-        return contacts[q];
+        return contacts.get(q);
     }
     
     Contact getContact(int k){
@@ -60,19 +56,13 @@ public class ContactApp {
         if (k < 0) {
             throw new RuntimeException("Nothing selected");
         }
-
-        if (contacts[k] == null) {
-            throw new RuntimeException("There is nothing here");
-        }
         
-        //normal
-        
-        return contacts[k];
+        return contacts.get(k);
         
     }
     
     
-    Contact[] getContactsList (){
+    Vector<Contact> getContactsList (){
         return contacts; 
     }
     

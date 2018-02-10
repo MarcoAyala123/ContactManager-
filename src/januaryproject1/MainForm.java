@@ -69,9 +69,9 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        MainAddButton = new javax.swing.JButton();
+        MainEditButton = new javax.swing.JButton();
+        MainDeleteButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
@@ -117,32 +117,39 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        MainAddButton.setText("Add");
+        MainAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                MainAddButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Edit");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        MainEditButton.setText("Edit");
+        MainEditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                MainEditButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Delete");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        MainDeleteButton.setText("Delete");
+        MainDeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                MainDeleteButtonActionPerformed(evt);
             }
         });
 
+        jTextField1.setEditable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+
+        jTextField2.setEditable(false);
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
 
         jLabel1.setText("First Name");
 
@@ -162,11 +169,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(MainAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE)
+                        .addComponent(MainEditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(MainDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -211,9 +218,9 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(MainAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                            .addComponent(MainDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MainEditButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -224,7 +231,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here: HERE
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void MainDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainDeleteButtonActionPerformed
         // TODO add your handling code here:
         try
         {
@@ -241,16 +248,45 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3.setText("");
         jTextField4.setText("");
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_MainDeleteButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void MainAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainAddButtonActionPerformed
         // TODO add your handling code here:
         
         AddEditForm edit = new AddEditForm(this, true);
+        
+        Contact newContact = new Contact();      
+        edit.setContact(newContact);
+        
         edit.setVisible(true);
-      
         
         
+        
+        
+        edit.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    super.windowClosed(e); //To change body of generated methods, choose Tools | Templates.
+                    
+                    
+                    System.out.println("HEREH");
+                    
+                    if (edit.isDone())
+                    {
+                        app.addContact(newContact);
+                    }
+                    
+                    jList1.setListData(app.getContactsList());
+        
+                    jTextField1.setText("");
+                    jTextField2.setText("");
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    
+                }
+
+            
+            });
        // app.addContact(jTextField1.getText(), 
        // jTextField2.getText(),
        // jTextField3.getText(),
@@ -259,16 +295,11 @@ public class MainForm extends javax.swing.JFrame {
        
         
         
-        jList1.setListData(app.getContactsList());
         
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_MainAddButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void MainEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainEditButtonActionPerformed
         // TODO add your handling code here:
         
         try
@@ -286,7 +317,7 @@ public class MainForm extends javax.swing.JFrame {
                     super.windowClosed(e); //To change body of generated methods, choose Tools | Templates.
                     
                     
-                    System.out.println("HEREH");
+                    System.out.println("HEREH2");
                     jList1.setListData(app.getContactsList());
                 }
 
@@ -297,12 +328,13 @@ public class MainForm extends javax.swing.JFrame {
         catch(RuntimeException e)
         {
             // pop up here
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
         
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_MainEditButtonActionPerformed
 
     private void jList1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jList1FocusGained
         // TODO add your handling code here:]
@@ -315,6 +347,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
+        System.out.println("VALUE CHANGED");
          try{
             int i = jList1.getSelectedIndex();
             jTextField1.setText(app.selectContact(i).getFirstName());
@@ -324,16 +357,15 @@ public class MainForm extends javax.swing.JFrame {
         }
         catch(RuntimeException e)
         {
-            // pop up here
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            
         }
     }//GEN-LAST:event_jList1ValueChanged
    
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton MainAddButton;
+    private javax.swing.JButton MainDeleteButton;
+    private javax.swing.JButton MainEditButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

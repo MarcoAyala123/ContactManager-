@@ -15,9 +15,17 @@ public class AddEditForm extends javax.swing.JDialog {
 
     Contact c;
 
+    boolean done = false;
+    
     @Override
     public void applyComponentOrientation(ComponentOrientation o) {
         super.applyComponentOrientation(o); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    public boolean isDone()
+    {
+        return done;
     }
     
     
@@ -196,6 +204,7 @@ public class AddEditForm extends javax.swing.JDialog {
         c.setPhoneNumber(PhoneNumberFieldEdit.getText());
         c.setEmail(URLFieldEdit.getText());
         setVisible(false);
+        done = true;
         dispose();//causes the dialogue to shutdown
     }//GEN-LAST:event_DoneButtonActionPerformed
 

@@ -17,6 +17,11 @@ public class ContactApp {
     
     
     
+    void setAllContacts(Vector<Contact> c)
+    {
+        contacts = c;
+    }
+    
     void addContact(Contact c)
     {
         contacts.add(c);

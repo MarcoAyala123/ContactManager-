@@ -7,6 +7,10 @@ package januaryproject1;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,11 +22,17 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    public MainForm(ContactApp app) {
+    public MainForm(ContactApp app) throws IOException {
         initComponents();
         this.app = app; 
         
+        ContactManager cm = new ContactManager(); 
+        Vector<Contact> vc=  cm.read("boo.txt"); 
+        app.setAllContacts(vc);
         
+        jList1.setListData(vc);
+        
+         
     }
     
      public static void main(String args[]) {
@@ -52,7 +62,11 @@ public class MainForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainForm(new ContactApp()).setVisible(true);
+                try {
+                    new MainForm(new ContactApp()).setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -237,6 +251,7 @@ public class MainForm extends javax.swing.JFrame {
         {
             app.deleteContact(jList1.getSelectedIndex());
             jList1.setListData(app.getContactsList());
+            
         }
         catch(RuntimeException e)
         {
@@ -247,6 +262,14 @@ public class MainForm extends javax.swing.JFrame {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
+        
+          ContactManager cm = new ContactManager(); 
+            try {
+            cm.write("boo.txt", app.getContactsList());
+        } catch (IOException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_MainDeleteButtonActionPerformed
 
@@ -274,6 +297,16 @@ public class MainForm extends javax.swing.JFrame {
                     if (edit.isDone())
                     {
                         app.addContact(newContact);
+                        
+                        
+                        // save
+                        ContactManager cm = new ContactManager(); 
+                        try {
+                            cm.write("boo.txt", app.getContactsList());
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                     }
                     
                     jList1.setListData(app.getContactsList());

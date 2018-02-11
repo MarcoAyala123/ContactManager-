@@ -3,3 +3,6 @@ Joaquin ,Mayo ,0983468766,jrlinks
 Audrey ,Sy ,091232941,auds@gmail.com
 Pepi ,Camacho,91928831,camachop@ismanila.org
 Fred ,Ayala ,028432524,fred@gmail.com
+Cristian ,Ayala ,193481904,bugmail88@gmail.com
+Jandro ,Alcantara ,13481834,alcan@gmail.com
+Mac,Donald,09178718317,ayalam@ismanila.org

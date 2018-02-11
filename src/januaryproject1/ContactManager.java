@@ -20,48 +20,57 @@ import java.util.Vector;
 public class ContactManager {
     
     public static void main (String args[]) throws IOException{
-        FileWriter fw = new FileWriter("boo.txt"); // creates the file that we are going to write to 
-        PrintWriter pw = new PrintWriter(fw); //connects to the file writer. Job is to allow you to write to the file like a system.out.println 
+        // creates the file that we are going to write to 
+        FileWriter fw = new FileWriter("contacts.txt");
+        //connects to the file writer. Job is to allow you to write to the file like a system.out.println 
+        PrintWriter pw = new PrintWriter(fw); 
 
-        pw.println("This is a sentence");
+        pw.println("This is a sentence"); //Delete this soon 
         
-        fw.close();
+        //closes the FileWriter 
+        fw.close(); 
         
         
         
         
         // read
         
-        FileReader fr = new FileReader("boo.txt");
+        FileReader fr = new FileReader("contacts.txt");//creates a new FileReader with a pointer called 'fr' and that accepts the file 'contacts.txt' as the parameter of its constructor method 
         BufferedReader br = new BufferedReader(fr); // allows reading with readline
         
-        String currentline = br.readLine();
+        String currentline = br.readLine();//Creates a String called currentline which equals one line in the file that is read 
         
-        while (currentline!=null)
+        while (currentline!=null) //while the currentline is not empty or is not null, the following code will be executed 
         {
             // do stuff with currentline
             
-            System.out.println(currentline);
+            System.out.println(currentline); //prints the current line 
             
             // go next line
-            currentline = br.readLine();
+            currentline = br.readLine(); //makes the currentline equal to the line the BufferedReader reads 
             
         }
         
-        fr.close();
+        fr.close(); //closes the FileReader 
         
     }
     
     void write(String filename, Vector<Contact> contacts) throws IOException{
-        FileWriter fw = new FileWriter(filename); // creates the file that we are going to write to 
-        PrintWriter pw = new PrintWriter(fw); //connects to the file writer. Job is to allow you to write to the file like a system.out.println 
+        // creates the file that we are going to write to 
+        FileWriter fw = new FileWriter(filename); 
+        //connects to the file writer. Job is to allow you to write to the file like a system.out.println 
+        PrintWriter pw = new PrintWriter(fw); 
         
-        for (int i=0; i<contacts.size(); i++)
+        //for loop to loop through all the contacts 
+        for (int i=0; i<contacts.size(); i++) 
         {
-            Contact c = contacts.get(i);
+            //makes a pointer to the i'th contact called 'c'
+            Contact c = contacts.get(i); 
+            //prints out the information about the contact in the file
             pw.println(c.getFirstName()+","+c.getLastName()+","+c.getPhoneNumber()+","+c.getEmail());
         }
-        fw.close();
+        //close the FileReader 
+        fw.close(); 
         
     }
     
@@ -69,15 +78,15 @@ public class ContactManager {
        {
        Vector<Contact> vector = new Vector<Contact>();
        
-        FileReader fr = new FileReader("boo.txt");
+       //makes a new FileReader with a pointer called 'fr' that accepts the file 
+       //'contacts.txt' as the parameter of its constructor method 
+        FileReader fr = new FileReader(filename); 
         BufferedReader br = new BufferedReader(fr); // allows reading with readline
-        
         String currentline = br.readLine();
+       // do stuff with currentline
         
-        while (currentline!=null)
+       while (currentline!=null)
         {
-            // do stuff with currentline
-            
             System.out.println(currentline);
             
             String[] data = currentline.split(",");
@@ -91,16 +100,9 @@ public class ContactManager {
              vector.add(contact);
             // go next line
             currentline = br.readLine();
-            
-            
         }
-        
         return vector;
-        
-        
-        
-       }
-        
+        }  
     }
     
     

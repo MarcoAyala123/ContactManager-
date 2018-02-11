@@ -6,6 +6,7 @@
 package januaryproject1;
 
 import java.awt.ComponentOrientation;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -88,7 +89,7 @@ public class AddEditForm extends javax.swing.JDialog {
 
         jLabel3.setText("Phone Number ");
 
-        jLabel4.setText("URL");
+        jLabel4.setText("Email");
 
         URLFieldEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,15 +198,35 @@ public class AddEditForm extends javax.swing.JDialog {
     }//GEN-LAST:event_URLFieldEditActionPerformed
 
     private void DoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneButtonActionPerformed
+        if (!PhoneNumberFieldEdit.getText().matches("\\d{11}"))
+        {
+            JOptionPane.showMessageDialog(this, "Phone is invalid. Must be 11 digits");            
+        }
+        
+        if (!URLFieldEdit.getText().matches("\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}"))
+        {
+            // bad email
+            
+            JOptionPane.showMessageDialog
+              (this, "Email is invalid. Must contain '@' symbol, and must end with a proper domain");
+        }
         
         
-        c.setFirstName(FirstNameFieldEdit.getText()); 
-        c.setLastName(LastNameFieldEdit.getText());
-        c.setPhoneNumber(PhoneNumberFieldEdit.getText());
-        c.setEmail(URLFieldEdit.getText());
-        setVisible(false);
-        done = true;
-        dispose();//causes the dialogue to shutdown
+        else
+        {
+
+            c.setFirstName(FirstNameFieldEdit.getText()); 
+            c.setLastName(LastNameFieldEdit.getText());
+            c.setPhoneNumber(PhoneNumberFieldEdit.getText());
+            c.setEmail(URLFieldEdit.getText());
+
+
+
+            setVisible(false);
+            done = true;
+            dispose();//causes the dialogue to shutdown
+        }        
+        
     }//GEN-LAST:event_DoneButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed

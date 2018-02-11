@@ -19,18 +19,18 @@ import javax.swing.JOptionPane;
  */
 public class MainForm extends javax.swing.JFrame {
     ContactApp app; 
+    ContactManager cm = new ContactManager(); //makes a new ContactManager with a pointer to it called 'cm'
     /**
      * Creates new form MainForm
      */
-    public MainForm(ContactApp app) throws IOException {
+    public MainForm(ContactApp app) throws IOException { //constructor code (does this when it starts
         initComponents();
-        this.app = app; 
+        this.app = app; //makes a pointer to the ContactApp 
         
-        ContactManager cm = new ContactManager(); 
-        Vector<Contact> vc=  cm.read("boo.txt"); 
-        app.setAllContacts(vc);
+        Vector<Contact> vc=  cm.read("contacts.txt"); //makes a Vector of contact called vc that has the contents of "contacts.txt"
+        app.setAllContacts(vc);// updates the contacts with the contents of 'vc' through the SetAllContacts method in the ContactApp 
         
-        jList1.setListData(vc);
+        jList1.setListData(vc);// updates the information in the jList in the Mainform 
         
          
     }
@@ -249,23 +249,23 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
-            app.deleteContact(jList1.getSelectedIndex());
-            jList1.setListData(app.getContactsList());
+            app.deleteContact(jList1.getSelectedIndex()); //uses the delete method in ContactApp to delete the selected contact
+            jList1.setListData(app.getContactsList()); //updates the jList in the MainForm through the 'getContactsList' method in the ContactApp 
             
         }
-        catch(RuntimeException e)
+        catch(RuntimeException e) //Code below executes if there is a runtime exception 
         {
             // pop up here
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage()); //Shows a message if there is a runtime exception via JOptionPane
         }
-        jTextField1.setText("");
+        jTextField1.setText(""); //Sets the fields in the mainform to be blank
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         
-          ContactManager cm = new ContactManager(); 
+          
             try {
-            cm.write("boo.txt", app.getContactsList());
+            cm.write("contacts.txt", app.getContactsList()); //uses the write method from 'cm' to write the contacts to the file 'contacts.txt' 
         } catch (IOException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -276,42 +276,36 @@ public class MainForm extends javax.swing.JFrame {
     private void MainAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainAddButtonActionPerformed
         // TODO add your handling code here:
         
-        AddEditForm edit = new AddEditForm(this, true);
+        AddEditForm edit = new AddEditForm(this, true); //Makes a new AddEditForm with a pointer called 'edit' 
         
-        Contact newContact = new Contact();      
-        edit.setContact(newContact);
+        Contact newContact = new Contact(); //Makes a new Contact with a pointer called 'newContact'      
+        edit.setContact(newContact); // Passes the newContact into the AddEditForm through the 'setContact' method
         
-        edit.setVisible(true);
+        edit.setVisible(true); //Makes the AddEditForm visible 
         
         
         
         
         edit.addWindowListener(new WindowAdapter() {
                 @Override
-                public void windowClosed(WindowEvent e) {
-                    super.windowClosed(e); //To change body of generated methods, choose Tools | Templates.
+                public void windowClosed(WindowEvent e) { //Code below happens when the AddEditForm is closed 
+                    super.windowClosed(e); 
                     
-                    
-                    System.out.println("HEREH");
-                    
-                    if (edit.isDone())
-                    {
-                        app.addContact(newContact);
-                        
-                        
+                    if (edit.isDone()){ //Checks if the boolean 'done' is true
+                        app.addContact(newContact); //Passes the newContact to the ContactApp so backend processing can happen 
                         // save
-                        ContactManager cm = new ContactManager(); 
+   
                         try {
-                            cm.write("boo.txt", app.getContactsList());
+                            cm.write("contacts.txt", app.getContactsList());//Passes the file 'contacts.txt' and the contacts from the ContactApp to the method 'write' in the ContactManager
                         } catch (IOException ex) {
                             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                     }
                     
-                    jList1.setListData(app.getContactsList());
+                    jList1.setListData(app.getContactsList()); //update the jList in the MainForm with the contacts 
         
-                    jTextField1.setText("");
+                    jTextField1.setText("");//sets all the fields in the MainForm to be blank 
                     jTextField2.setText("");
                     jTextField3.setText("");
                     jTextField4.setText("");
